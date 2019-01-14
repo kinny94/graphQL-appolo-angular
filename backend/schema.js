@@ -8,6 +8,7 @@ const typeDefs = [`
         author: String,
         topic: String,
         url: String,
+        description: String,
         voteCount: Int 
     }
 

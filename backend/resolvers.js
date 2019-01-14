@@ -35,7 +35,10 @@ const resolvers = {
         },
 
         course: (root, {id}) => {
-            return courseModel.findOne({id: id});
+            return coursesData.filter(course => {
+                return course.id === id
+            })[0 ];
+            // return courseModel.findOne({id: id});
         },
     },
     Mutation: {
