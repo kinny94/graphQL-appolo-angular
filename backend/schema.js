@@ -13,7 +13,7 @@ const typeDefs = [`
     }
 
     type Query {
-        allCourses(search: String): [Course]
+        allCourses(searchTerm: String): [Course]
         course(id: String!): Course
     }
 
