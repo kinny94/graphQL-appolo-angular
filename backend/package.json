@@ -1,0 +1,24 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "babel-watch server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-watch": "^2.0.8"
+  },
+  "dependencies": {
+    "apollo-server": "^2.3.1",
+    "apollo-server-express": "^2.3.1",
+    "express": "^4.16.4",
+    "graphql": "^14.0.2",
+    "graphql-tools": "^4.0.3"
+  }
+}
