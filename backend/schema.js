@@ -1,4 +1,4 @@
-import { makeExecutableSchema, SchemaDirectiveVisitor } from 'apollo-server';
+import { makeExecutableSchema } from 'apollo-server';
 import resolvers from './resolvers';
 
 const typeDefs = [`

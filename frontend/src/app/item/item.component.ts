@@ -17,11 +17,25 @@ export class ItemComponent implements OnInit {
   }
 
   upVote(id: string) {
-    this.courseService.upVoteCourse(id).subscribe(data => console.log('upvote', data));
+    this.courseService.upVoteCourse(id).subscribe(
+      ({data}) => {
+        console.log('upvoted!', data);
+      },
+      (error) => {
+        console.log('failed to upvote!', error);
+      }
+    );
   }
 
   downVote(id: string) {
-    this.courseService.downVoteCourse(id).subscribe(data => console.log('downvoted', data));
+    this.courseService.downVoteCourse(id).subscribe(
+      ({data}) => {
+        console.log('downvoted!', data);
+      },
+      (error) => {
+        console.log('failed to downvote!', error);
+      }
+    );
   }
 
 

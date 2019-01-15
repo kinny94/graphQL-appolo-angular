@@ -13,7 +13,7 @@ export class CourseService {
 
   constructor(private apollo: Apollo) { }
 
-  getAllCourses(searchTerm: String) {
+  getAllCourses(searchTerm: string) {
     return this.apollo.watchQuery<Query>({
       pollInterval: 500,
       query: gql`
@@ -39,10 +39,10 @@ export class CourseService {
     );
   }
 
-  upVoteCourse(id: String) {
+  upVoteCourse(id: string) {
     return this.apollo.mutate({
       mutation: gql`
-        mutation upVote($id: String){
+        mutation upVote($id: String!){
           upVote(id: $id){
             id
             title
@@ -56,11 +56,11 @@ export class CourseService {
     });
   }
 
-  downVoteCourse(id: String) {
+  downVoteCourse(id: string) {
     return this.apollo.mutate({
       mutation: gql`
-        mutation downVote($id: String){
-          upVote(id: $id){
+        mutation downVote($id: String!){
+          downVote(id: $id){
             id
             title
             voteCount
