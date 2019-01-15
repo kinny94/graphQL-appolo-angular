@@ -1,2 +1,2 @@
-# graphQL-appolo-angular
-A repository to learn graphQL and apollo client with angular. The repo contains the notes, essential code along with an example application.
+# Udemy Coureses Application 
+A repository to learn graphQL and apollo client with angular. The repository contains a web applciation runnning on Angular 7 frontend and NodeJS Server. The application uses a MongoDB Database to extract and view courses from udemy. The applciation allows you to search for a course from the database and also allows you to rate courses with realtime updates on the front-end. The application uses GraphQl and appolo client for angular to extract from the database.
