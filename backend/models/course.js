@@ -15,6 +15,7 @@ const courseSchema = new Schema({
 
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
+courseSchema.index({'$**': 'text'});
 
 const model = mongoose.model('course', courseSchema);
 export default model;

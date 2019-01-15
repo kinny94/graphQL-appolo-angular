@@ -18,14 +18,14 @@ const typeDefs = [`
     }
 
     type Mutation {
-        addCourse(title: String!, author: String!, description: String!, topic: String!, url: String): Course
+        addCourse(title: String!, author: String!, description: String!, topic: String!, url: String!): Course
         upVote(id: String!): Course
         downVote(id: String!): Course
     }
 `];
 
 const schema = makeExecutableSchema({
-    typeDefs,
+    typeDefs,  
     resolvers
 });
 
