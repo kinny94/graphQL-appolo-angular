@@ -1,0 +1,94 @@
+# # Write your query or mutation here
+# query AllCourses {
+#   allCourses {
+#     id,
+#     author,
+#     description,
+#     voteCount,
+#     topic,
+#     url
+#   }
+# }
+
+# query Course($id: String!) {
+#   course(id: $id) {
+#     id,
+#     author,
+#     description,
+#     voteCount,
+#     topic,
+#     url
+#   }
+# }
+
+# query aliases {
+#   myFirstCourse: course(id: "1"){
+#     ...courseFields
+#   }
+  
+#   mySecondCourse: course(id: "2"){
+#    ...courseFields
+#   }
+# }
+
+fragment courseFields on Course {
+  id,
+  author,
+  description,
+  voteCount,
+  topic,
+  url
+}
+
+# mutation UpVoteCourse {
+#   first:  upVote(id: "1"){
+# 		...courseFields
+#   }
+#   second:  upVote(id: "2"){
+# 		...courseFields
+#   }
+# }
+
+# mutation DownVoteCourse {
+#   downVote(id: "1"){
+# 		...courseFields
+#   }
+# }
+
+# After hooking graphql to the mongodb database
+
+mutation AddCourse {
+  addCourse(
+    title: "JavaScript: Understanding the weird Parts",
+		author: "Anthony Alicea",
+		description: "An advanced Javascript course for everyone!. Scope, closures, prototype etc",
+    url: "https:codingthesmartway.com/courses/understand-javascript/",
+    topic: "JavaScript"
+  ) {
+    ...courseFields
+  }
+}
+
+query AllCoursesWithSearch {
+  allCourses(searchTerm: "Brad"){
+    ...courseFields
+  }
+}
+
+query GetCourse{
+  course(id: "741e4800-182c-11e9-bdc6-7da1f1fa2b54"){
+    ...courseFields
+  }
+}
+
+mutation UpVoteCourse{
+  upVote(id: "0d2a62a0-182c-11e9-bdc6-7da1f1fa2b54"){
+    ...courseFields
+  }
+}
+
+mutation DownVoteCourse{
+  downVote(id: "0d2a62a0-182c-11e9-bdc6-7da1f1fa2b54"){
+    ...courseFields
+  }
+}
