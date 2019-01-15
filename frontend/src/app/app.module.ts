@@ -10,12 +10,14 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material-module';
 import { SearchBarComponent } from './search-bar/search-bar';
+import { ListComponent } from './list/list.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    ListComponent
   ],
   imports: [
     BrowserModule,

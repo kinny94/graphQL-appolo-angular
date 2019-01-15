@@ -14,7 +14,7 @@ export class CourseService {
   constructor(private apollo: Apollo) { }
 
   getAllCourses(searchTerm: String) {
-    this.apollo.watchQuery<Query>({
+    return this.apollo.watchQuery<Query>({
       pollInterval: 500,
       query: gql`
         query allCourses($searchTerm: String){
