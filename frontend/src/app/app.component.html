@@ -1,7 +1,7 @@
 <div class="container" [class.is-mobile]="mobileQuery.matches">
   <mat-toolbar color="primary" class="toolbar">
     <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-    <h1 class="app-name">Responsive App</h1>
+    <h1 class="app-name">Web Development courses</h1>
   </mat-toolbar>
 
   <mat-sidenav-container class="sidenav-container">
@@ -15,6 +15,7 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
+      <app-search-bar></app-search-bar>
       <p>Hello</p>
     </mat-sidenav-content>
   </mat-sidenav-container>
