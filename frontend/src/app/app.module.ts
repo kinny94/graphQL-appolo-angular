@@ -11,13 +11,16 @@ import { AppComponent } from './app.component';
 import { MaterialModule } from './material-module';
 import { SearchBarComponent } from './search-bar/search-bar';
 import { ListComponent } from './list/list.component';
+import { ItemComponent } from './item/item.component';
+import { CourseService } from './course.service';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchBarComponent,
-    ListComponent
+    ListComponent,
+    ItemComponent
   ],
   imports: [
     BrowserModule,
@@ -27,14 +30,14 @@ import { ListComponent } from './list/list.component';
     ApolloModule,
     HttpLinkModule
   ],
-  providers: [],
+  providers: [CourseService],
   bootstrap: [AppComponent]
 })
 
 export class AppModule {
   constructor(apollo: Apollo, httpLink: HttpLink) {
     apollo.create({
-      link: httpLink.create({ uri: 'http://localhost:4000/graphql' }),
+      link: httpLink.create({ uri: 'http://localhost:3000/graphql' }),
       cache: new InMemoryCache()
     });
   }

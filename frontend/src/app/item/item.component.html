@@ -1,0 +1,14 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title matBadge="{{course.voteCount}}" matBadgeOverlap="false">{{course.title}}</mat-card-title>
+    <mat-card-subtitle>{{ course.author}}</mat-card-subtitle>
+    <mat-card-subtitle>{{ course.topic}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>{{course.description}}</p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="upVote(course.id)">Upvote</button>
+    <button mat-raised-button color="warn" (click)="downVote(course.id)">Downvote</button>
+  </mat-card-actions>
+</mat-card>

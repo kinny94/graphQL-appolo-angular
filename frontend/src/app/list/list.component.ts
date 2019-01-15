@@ -12,7 +12,7 @@ import { CourseService } from './../course.service';
 })
 export class ListComponent implements OnInit, OnChanges {
 
-  @Input() searchTerm: String;
+  @Input() searchTerm: string;
   courses: Observable<Course[]>;
 
   constructor(private courseService: CourseService) { }
@@ -24,5 +24,4 @@ export class ListComponent implements OnInit, OnChanges {
   ngOnChanges() {
     this.courses = this.courseService.getAllCourses(this.searchTerm);
   }
-
 }
