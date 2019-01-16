@@ -1,1 +1,75 @@
- 
+ GraphQL
+
+It's an API standard that provides a more efficient, powerful and more flexible alternative to REST.
+It enables declarative data fetching. It exposes a single endpoint and responds to queries.
+
+GraphQl has its own type system for defining a schema of an API.
+
+eg. 
+
+type Person {
+    name: String!
+    age: Int!
+    posts: [Post!]!
+}
+
+type Post {
+    title: String!
+    author: Person!
+}
+
+* Writing Data with Mutations
+
+3 Kinds of mutations:
+    * creating new data
+    * updating existing data
+    * deleting existing data
+
+eg. 
+
+mutation {
+    createPerson(name: "Bob", age: 36) {
+        name 
+        age
+    }
+}
+
+* Realtime updates with subscriptions
+
+eg.
+subscription {
+    newPerson {
+        name
+        age
+    }
+}
+
+The GraphQL Schema: It defines the capabilities of the API by specifying how a client fetch and update data. It represents contract between client and server.
+
+Root Types
+
+type Query {
+    ...
+}
+
+type Mutations {
+    ...
+}
+
+type Subscription {
+    ...
+}
+
+eg 
+
+type Query {
+    allPersons(last: Int): [Person!]!
+}
+
+type Mutation {
+    createPerson(name: String!, age:String!): Person!
+}
+
+type Subscription {
+    newPerson: Person!
+}
