@@ -73,3 +73,146 @@ type Mutation {
 type Subscription {
     newPerson: Person!
 }
+
+## Architectural Use Cases
+
+1. GraphQl serve with a connected database.
+2. GraphQL server to integrate existing system.
+3. A hybrid approach with a connected database and integration of existing system.
+
+# Resolver functions
+
+* GraphQL queries/mutations consists of set of fields. GraphQL server has one resolver function per field.
+* The purpose of each resolver is to retrieve the data for its corresponding field.
+
+### CLIENTS:
+Working with a GraphQL API on the frontend is a great opportunity to develop new abstractions and help implement common functionality on the client-side.
+
+* Directly Sending Queries and Mutations
+A major benefit of graphQL is that it allows you to fetch and upadte data in a declarative manner. Put differently, we climb up one step higher on the API abstraction ladder and don't have to deal with low-level networking tasks.
+When you previously used plain HTTP (like fetch in Javascript or NSURLSession on iOS) to load data from an API, all you need to do with GraphQL is write a query where you declare your data requirements and let the system take care of sending the request and handling the response for you. This is precisely what a GraphQL client will do.
+
+* View Layer Integrations & UI updates
+Once the sever response was received and handled by the GraphQL cient, the requested data somehow needs to end up in your UI. Depending on the platforms and frameworks you're developing with, there will be different approaches to how UI updates are handled in general.
+
+* Caching Query Results.
+In the majority of applications, you’ll want to maintain a cache of the data that was previously fetched from the server. Having information cached locally is essential to provide a fluent user experience and takes the load off your users’ data plans.
+Generally, when caching data, the intuition is to put information that’s fetched remotely into a local store from where it can be retrieved later on. With GraphQL, the naive approach would be to simply put the results of GraphQL queries into the store and whenever that exact same query is executed again, just return the previously stored data. It turns out that this approach is very inefficient for most applications.
+A more beneficial approach is to normalize the data beforehand. That means that the (potentially nested) query result gets flattened and the store will only contain individual records that can be referenced with a globally unique ID.
+
+* Build-time Schema Validation & Optimizations
+Since the schema contains all information about what a client can potentially do with a GraphQL API, there is a great opportunity to validate and potentially optimize the queries that a client wants to send already at build-time.
+When the build environment has access to the schema, it can essentially parse all the GraphQL code that’s located in the project and compare it against the information from the schema. This catches typos and other errors before an application gets into the hands of actual users where the consequences of an error would be a lot more drastic.
+
+* Colocating Views and Data Dependencies
+A powerful concept of GraphQL is that it allows you to have UI code and data requirements side-by-side. The tight coupling of views and their data dependencies greatly improves the developer experience. The mental overhead of thinking about how the right data ends up in the right parts of the UI is eliminated.
+
+### SERVER
+GraphQL doesn’t just specify a way to describe schemas and a query language to retrieve data from those schemas, but an actual execution algorithm for how those queries are transformed into results. This algorithm is quite simple at its core: The query is traversed field by field, executing “resolvers” for each field.
+
+### Fragments
+Fragments are a handy feature to help to improve the structure and reusability of your GraphQL code. A fragment is a collection of fields on a specific type.
+
+for eg.
+type User {
+    name: String!
+    age: Int!
+    email: String!
+    street: String!
+    zipcode: String!
+    city: String!
+}
+
+fragemnt addressDetails on User {
+    name
+    street
+    zipcode
+    city
+}
+
+{
+  allUsers {
+    ... addressDetails
+  }
+}
+
+#### Parameterizing fields with Arguements
+In GraphQL type definitions, each field can take zero or more arguments. Similar to arguments that are passed into functions in typed programming languages, each argument needs to have a name and a type. In GraphQL, it’s also possible to specify default values for arguments.
+
+type Query {
+  allUsers: [User!]!
+}
+
+type User {
+  name: String!
+  age: Int!
+}
+
+We could now add an argument to the allUsers field that allows us to pass an argument to filter users and include only those above a certain age. We also specify a default value so that by default all users will be returned:
+
+type Query {
+  allUsers(olderThan: Int = -1): [User!]!
+}
+
+{
+  allUsers(olderThan: 30) {
+    name
+    age
+  }
+}
+
+#### Enums
+GraphQL allows you to define enumerations types (short enums), a language feature to express the semantics of a type that has a fixed set of values.
+for eg.
+enum Weekday {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+#### Interface
+An interface can be used to describe a type in an abstract way. It allows you to specify a set of fields that any concrete type, which implements this interface, needs to have,
+for eg 
+
+interface Node {
+  id: ID!
+}
+
+type User implements Node {
+  id: ID!
+  name: String!
+  age: Int!
+}
+
+#### Union Types
+Union types can be used to express that a type should be either of a collection of other types. They are best understood by means of an example
+type Adult {
+  name: String!
+  work: String!
+}
+
+type Child {
+  name: String!
+  school: String!
+}
+
+union Person = Adult | Child
+This brings up a different problem: In a GraphQL query where we ask to retrieve information about a Child but only have a Person type to work with, how do we know whether we can actually access this field?
+The answer to this is called conditional fragments:
+
+
+{
+  allPersons {
+    name # works for `Adult` and `Child`
+    ... on Child {
+      school
+    }
+    ... on Adult {
+       work
+    }
+  }
+}
